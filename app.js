@@ -16,6 +16,8 @@ const numberTypeMap = {
 
 const baseUrl = 'http://20.244.56.144/evaluation-service/';
 
+const AUTH_TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQ4MDY4NzQwLCJpYXQiOjE3NDgwNjg0NDAsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6IjNiOGQ5MzI3LTc4NzktNDNlNy1hOGJjLTM3NTgyODcyOGIyNCIsInN1YiI6Im5pdGhpc2gyMzI1QGdtYWlsLmNvbSJ9LCJlbWFpbCI6Im5pdGhpc2gyMzI1QGdtYWlsLmNvbSIsIm5hbWUiOiJuaXRoaXNoa3VtYXIgcyIsInJvbGxObyI6IjkyNzYyMmJhbDAzNCIsImFjY2Vzc0NvZGUiOiJ3aGVRVXkiLCJjbGllbnRJRCI6IjNiOGQ5MzI3LTc4NzktNDNlNy1hOGJjLTM3NTgyODcyOGIyNCIsImNsaWVudFNlY3JldCI6IlJTYk1WZ0FTWFVVQXF2c20ifQ.ekm3Ey77P-zXkojmd208f5-1r-nNY7npOWSIG247WR4';
+
 const storedNumbers = {
   p: [],
   f: [],
@@ -57,7 +59,7 @@ app.get('/numbers/:numberid', async (req, res) => {
   try {
     const sourceUrl = baseUrl + numberTypeMap[numberid];
     console.log(`Fetching numbers from: ${sourceUrl}`);
-    const response = await axios.get(sourceUrl, { timeout: TIMEOUT_MS });
+    const response = await axios.get(sourceUrl, { timeout: TIMEOUT_MS, headers: { Authorization: AUTH_TOKEN } });
     console.log('Response from third-party API:', response.data);
 
     if (!response.data || !Array.isArray(response.data.numbers)) {
